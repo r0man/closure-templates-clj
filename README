@@ -1,0 +1,9 @@
+# closure-templates-clj
+
+Another Clojure library for Google's Closure Templates.
+
+## License
+
+Copyright (C) 2011 Roman Scherer
+
+Distributed under the Eclipse Public License, the same as Clojure.
