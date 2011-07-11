@@ -27,10 +27,6 @@
   [compilation-unit template data & [bundle]]
   (render compilation-unit template data bundle))
 
-(defn tofu?
-  "Returns true if arg is a SoyTofu instance, otherwise false."
-  [arg] (isa? (class arg) com.google.template.soy.tofu.SoyTofu))
-
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
   (let [fn-name# fn-name template# (template-name (str (or namespace *ns*) "/" fn-name#))]
     (add-soy-file! (classpath-file (template-path (str (or namespace *ns*) "/" fn-name#))))
