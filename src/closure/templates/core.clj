@@ -1,17 +1,42 @@
 (ns closure.templates.core
-  (:refer-clojure :exclude (replace))
+  (:refer-clojure :exclude (compile replace))
   (:use [clojure.contrib.def :only (defvar)]
         closure.templates.classpath
+        closure.templates.protocol
         closure.templates.resources))
 
 (defvar *tofu* (ref nil)
-  "The Tofu object that contains all compiled Soy template files.")
+  "The global Tofu object that contains all compiled Soy template
+  files that were define via deftemplate.")
 
-(defmacro deftemplate [name args body & {:keys [filename namespace]}]
-  (let [name# name
-        template-name# (template-name (str (or namespace *ns*) "/" name#))
-        template-path# (template-path (str (or namespace *ns*) "/" name#))]
-    (add-soy-file! (classpath-file template-path#))
-    (dosync (ref-set *tofu* (compile-fileset @*fileset*)))
-    `(defn ~name [~@args]
-       (render-template @*tofu* ~template-name# (do ~body)))))
+(defn compile-template
+  "Compile arg into a SoyTofu object."
+  [arg] (compile arg))
+
+;; (defn compile-template!
+;;   "Compile arg into a SoyTofu object and add it to the *tofu* object."
+;;   [arg] (add-soy-file! (compile arg)))
+
+(defn recompile!
+  "Recompile the *tofu* object with the templates in *fileset*."
+  [] (dosync (ref-set *tofu* (compile-template @*fileset*))))
+
+(defn render-template
+  "Render template using the compilation unit, interpolate the result
+  with data and the optional message bundle."
+  [compilation-unit template data & [bundle]]
+  (render compilation-unit template data bundle))
+
+(defn tofu?
+  "Returns true if arg is a SoyTofu instance, otherwise false."
+  [arg] (isa? (class arg) com.google.template.soy.tofu.SoyTofu))
+
+(defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
+  (let [fn-name# fn-name template# (template-name (str (or namespace *ns*) "/" fn-name#))]
+    (add-soy-file! (classpath-file (template-path (str (or namespace *ns*) "/" fn-name#))))
+    (recompile!)
+    (prn (template-path (str (or namespace *ns*) "/" fn-name#)))
+    (prn template#)
+    ;; TODO: How to get the correct namespace of the caller?
+    `(defn ~fn-name# [~@args]
+       (render-template @*tofu* ~template# (do ~body)))))

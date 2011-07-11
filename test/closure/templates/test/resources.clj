@@ -45,10 +45,6 @@
     (is (= 1 (count soys)))
     (is (every? #(isa? (class %) File) soys))))
 
-(deftest test-render-template
-  (let [tofu (compile-fileset (soy-file-seq "resources/soy"))]
-    (is (= "Hello closure!" (render-template tofu "closure.templates.test.core.helloName" {"name" "closure"})))))
-
 (deftest test-template-name
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name nil)))
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name "")))

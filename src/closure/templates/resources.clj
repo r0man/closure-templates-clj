@@ -73,8 +73,3 @@
                 [(.replace (as-str k) "-" "_")
                  (if (map? v) (underscore-keys v) v)])]
         (postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
-
-(defn render-template
-  "Render the template in the Tofu with data."
-  [tofu template data & [bundle]]
-  (.render tofu template (underscore-keys data) bundle))
