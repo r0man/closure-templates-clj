@@ -1,8 +1,8 @@
 (ns closure.templates.test.classpath
   (:import [java.net URI URL] java.io.File)
-  (:use closure.templates.resources
+  (:use clojure.test
         closure.templates.classpath
-        clojure.test))
+        closure.templates.soy))
 
 (deftest test-classpath-file
   (is (thrown? java.io.FileNotFoundException (classpath-file "not-existing")))

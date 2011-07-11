@@ -3,9 +3,10 @@
   (:import java.io.File java.net.URI com.google.template.soy.tofu.SoyTofu)
   (:use clojure.test
         closure.templates.classpath
-        closure.templates.core
+        closure.templates.fileset
         closure.templates.protocol
-        closure.templates.test))
+        closure.templates.test
+        closure.templates.tofu))
 
 (defn is-compiling [compile-fn]
   (let [check #(is (tofu? (compile-fn %)))]
@@ -63,3 +64,8 @@
 
 (deftest test-render
   (is-rendering render))
+
+(deftest test-underscore-keys
+  (are [m expected]
+    (is (= expected (underscore-keys m)))
+    {:a-1 {:b-2 {:c-3 1}}} {"a_1" {"b_2" {"c_3" 1}}}))

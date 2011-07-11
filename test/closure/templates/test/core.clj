@@ -19,8 +19,3 @@
 
 (deftest test-render-template
   (is-rendering render-template))
-
-(deftest test-tofu?
-  (is (not (tofu? nil)))
-  (is (not (tofu? "")))
-  (is (tofu? (compile-template example-file))))

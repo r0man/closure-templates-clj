@@ -1,8 +1,11 @@
 (ns closure.templates.protocol
   (:refer-clojure :exclude (compile))
-  (:import clojure.lang.ISeq java.io.File com.google.template.soy.tofu.SoyTofu
-           [java.net URI URL])
-  (:use closure.templates.resources))
+  (:import [java.net URI URL]
+           clojure.lang.ISeq java.io.File com.google.template.soy.tofu.SoyTofu)
+  (:use [clojure.contrib.string :only (as-str)]
+        [clojure.walk :only (postwalk)]
+        closure.templates.fileset
+        closure.templates.soy))
 
 (defprotocol Compile
   (compile [object]
@@ -11,6 +14,14 @@
 (defprotocol Render
   (render [object template data bundle]
     "Render the Soy template."))
+
+(defn underscore-keys
+  "Recursively transforms all map keys to strings and replaces all
+  dashes in the map keys with underscores."
+  [m] (let [f (fn [[k v]]
+                [(.replace (as-str k) "-" "_")
+                 (if (map? v) (underscore-keys v) v)])]
+        (postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
 
 (extend-type nil
   Compile

@@ -1,9 +1,9 @@
 (ns closure.templates.test.fileset
-  (:import [com.google.template.soy.tofu SoyTofu]
-           java.io.File)
+  (:import java.io.File)
   (:use clojure.test
         closure.templates.test
         closure.templates.soy
+        closure.templates.tofu
         closure.templates.fileset))
 
 (deftest test-add-soy-file!
@@ -19,5 +19,4 @@
   (is (empty? @*fileset*)))
 
 (deftest test-compile-fileset
-  (let [tofu (compile-fileset (soy-file-seq "resources/soy"))]
-    (is (isa? (class tofu) SoyTofu))))
+  (is (tofu? (compile-fileset (soy-file-seq "resources/soy")))))

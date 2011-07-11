@@ -2,8 +2,9 @@
   (:refer-clojure :exclude (compile replace))
   (:use [clojure.contrib.def :only (defvar)]
         closure.templates.classpath
+        closure.templates.fileset
         closure.templates.protocol
-        closure.templates.resources))
+        closure.templates.soy))
 
 (defvar *tofu* (ref nil)
   "The global Tofu object that contains all compiled Soy template
