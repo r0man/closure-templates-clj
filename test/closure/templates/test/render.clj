@@ -1,6 +1,7 @@
 (ns closure.templates.test.render
   (:import java.io.File java.net.URI com.google.template.soy.tofu.SoyTofu)
   (:use clojure.test
+        closure.templates.core
         closure.templates.render
         closure.templates.test))
 
@@ -11,22 +12,20 @@
       (is (nil? (render nil nil nil nil))))
     (testing "with file"
       (check example-file))
-    ;; (testing "with tofu"
-    ;;   (check (compile example-file)))
-    ;; (testing "with seq of files"
-    ;;   (check (seq [example-file])))
-    ;; (testing "with seq of filenames"
-    ;;   (check (seq [example-path])))
-    ;; (testing "with seq of duplicates"
-    ;;   (check (seq [example-path example-file])))
-    ;; (testing "with vector"
-    ;;   (check [example-file]))
-    ;; (testing "with set"
-    ;;   (check (set [example-file])))
+    (testing "with seq of files"
+      (check (seq [example-file])))
+    (testing "with seq of filenames"
+      (check (seq [example-path])))
+    (testing "with seq of duplicates"
+      (check (seq [example-path example-file])))
+    (testing "with vector"
+      (check [example-file]))
+    (testing "with set"
+      (check (set [example-file])))
     (testing "with string"
       (check example-path))
-    ;; (testing "with tofu"
-    ;;   (check (compile example-path)))
+    (testing "with tofu"
+      (check (compile-template example-file)))
     (testing "with uri"
       (check example-uri))
     (testing "with url"
