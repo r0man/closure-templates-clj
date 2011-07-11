@@ -4,7 +4,7 @@
            [java.net URI URL])
   (:use closure.templates.resources))
 
-(defprotocol Compilation
+(defprotocol Compile
   (compile [object]
     "Compiles object into a Soy Tofu."))
 
@@ -13,7 +13,7 @@
     "Renders the Soy template."))
 
 (extend-type nil
-  Compilation
+  Compile
   (compile [_]
     nil)
   Render
@@ -21,7 +21,7 @@
     nil))
 
 (extend-type File
-  Compilation
+  Compile
   (compile [file]
     (compile-fileset [(soy-file file)]))
   Render
@@ -29,7 +29,7 @@
     (render (compile file) template data bundle)))
 
 (extend-type ISeq
-  Compilation
+  Compile
   (compile [seq]
     (compile-fileset (set (map soy-file seq))))
   Render
@@ -37,7 +37,7 @@
     (render (compile seq) template data bundle)))
 
 (extend-type Iterable
-  Compilation
+  Compile
   (compile [iterable]
     (compile (seq iterable)))
   Render
@@ -45,7 +45,7 @@
     (render (seq iterable) template data bundle)))
 
 (extend-type SoyTofu
-  Compilation
+  Compile
   (compile [tofu]
     tofu)
   Render
@@ -53,7 +53,7 @@
     (.render tofu template (underscore-keys data) bundle)))
 
 (extend-type String
-  Compilation
+  Compile
   (compile [path]
     (compile (File. path)))
   Render
@@ -61,7 +61,7 @@
     (render (compile path) template data bundle)))
 
 (extend-type URI
-  Compilation
+  Compile
   (compile [uri]
     (compile (File. uri)))
   Render
@@ -69,7 +69,7 @@
     (render (File. uri) template data bundle)))
 
 (extend-type URL
-  Compilation
+  Compile
   (compile [url]
     (compile (.toURI url)))
   Render
