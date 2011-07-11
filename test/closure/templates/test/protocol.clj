@@ -2,15 +2,10 @@
   (:refer-clojure :exclude (compile))
   (:import java.io.File java.net.URI com.google.template.soy.tofu.SoyTofu)
   (:use clojure.test
-        closure.templates.core
         closure.templates.classpath
-        closure.templates.protocol))
-
-(def example-soy "soy/closure/templates/test/core.soy")
-(def example-path (str "resources/" example-soy))
-(def example-file (File. example-path))
-(def example-uri (classpath-uri example-soy))
-(def example-url (classpath-url example-soy))
+        closure.templates.core
+        closure.templates.protocol
+        closure.templates.test))
 
 (defn is-compiling [compile-fn]
   (let [check #(is (tofu? (compile-fn %)))]
