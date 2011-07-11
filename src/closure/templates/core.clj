@@ -2,8 +2,9 @@
   (:refer-clojure :exclude (compile replace))
   (:use [clojure.contrib.def :only (defvar)]
         closure.templates.classpath
+        closure.templates.compile
         closure.templates.fileset
-        closure.templates.protocol
+        closure.templates.render
         closure.templates.soy))
 
 (defvar *tofu* (ref nil)

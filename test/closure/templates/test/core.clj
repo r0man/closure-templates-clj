@@ -1,12 +1,13 @@
 (ns closure.templates.test.core
   (:import java.io.File java.net.URI com.google.template.soy.tofu.SoyTofu)
   (:use clojure.test
-        closure.templates.test.protocol
         closure.templates.classpath
-        closure.templates.core))
+        closure.templates.core
+        closure.templates.test.compile
+        closure.templates.test.render))
 
-(deftemplate hello-name [name]
-  {:name name})
+;; (deftemplate hello-name [name]
+;;   {:name name})
 
 ;; (deftest test-hello-name
 ;;   (is (= "Hello Closure!" (hello-name "Closure"))))
