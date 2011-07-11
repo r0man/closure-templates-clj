@@ -6,11 +6,11 @@
 
 (defprotocol Compile
   (compile [object]
-    "Compiles object into a Soy Tofu."))
+    "Compile object into a Soy Tofu."))
 
 (defprotocol Render
   (render [object template data bundle]
-    "Renders the Soy template."))
+    "Render the Soy template."))
 
 (extend-type nil
   Compile
