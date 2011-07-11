@@ -34,12 +34,12 @@
 (defn template-name
   "Returns the template name by replacing all '/' characters with a
   '.' and camelizing the names between dots."
-  [name] {:pre [(not (blank? name))]}
-  (camelize (replace name "/" ".") :lower))
+  [name & [ns]] {:pre [(not (blank? (str name)))]}
+  (camelize (replace (str (or ns *ns*) "/" name) "/" ".") :lower))
 
 (defn template-path
   "Returns the filename of the template relative to the classpath."
-  [name] {:pre [(not (blank? name))]}
-  (str *directory* "/"
-       (replace (underscore (replace name #"/.*" "")) #"\." File/separator)
+  [name & [ns]] {:pre [(not (blank? (str name)))]}
+  (str *directory* File/separator
+       (replace (underscore (str (or ns *ns*))) #"\." File/separator)
        "." *extension*))

@@ -28,17 +28,11 @@
 (deftest test-template-name
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name nil)))
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name "")))
-  (are [name expected]
-    (is (= expected (template-name name)))
-    "hello-world" "helloWorld"
-    "example/hello-world" "example.helloWorld"
-    "my-example/hello-world" "myExample.helloWorld"))
+  (is (= "closure.templates.test.soy.helloWorld" (template-name 'hello-world)))
+  (is (= "user.helloWorld" (template-name 'hello-world "user"))))
 
 (deftest test-template-path
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-path nil)))
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-path "")))
-  (are [name expected]
-    (is (= expected (template-path name)))
-    "user/hello-world" "soy/user.soy"
-    "my-example/hello-world" "soy/my_example.soy"
-    "closure.templates.test.core/hello-name" "soy/closure/templates/test/core.soy"))
+  (is (= "soy/closure/templates/test/soy.soy" (template-path "hello-world")))
+  (is (= "soy/user.soy" (template-path "hello-world" "user"))))
