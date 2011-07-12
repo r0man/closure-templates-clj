@@ -1,6 +1,9 @@
 (ns closure.templates.compile
   (:refer-clojure :exclude (compile))
-  (:import [java.net URI URL] clojure.lang.ISeq java.io.File com.google.template.soy.tofu.SoyTofu)
+  (:import [clojure.lang IPersistentSet IPersistentVector ISeq]
+           [java.net URI URL]
+           com.google.template.soy.tofu.SoyTofu
+           java.io.File)
   (:use closure.templates.fileset
         closure.templates.soy))
 
@@ -18,15 +21,20 @@
   (compile [file]
     (compile-fileset [(soy-file file)])))
 
+(extend-type IPersistentSet
+  Compile
+  (compile [set]
+    (compile (seq set))))
+
+(extend-type IPersistentVector
+  Compile
+  (compile [vector]
+    (compile (seq vector))))
+
 (extend-type ISeq
   Compile
   (compile [seq]
     (compile-fileset (set (map soy-file seq)))))
-
-(extend-type Iterable
-  Compile
-  (compile [iterable]
-    (compile (seq iterable))))
 
 (extend-type SoyTofu
   Compile

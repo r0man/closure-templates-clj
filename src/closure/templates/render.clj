@@ -1,7 +1,8 @@
 (ns closure.templates.render
   (:refer-clojure :exclude (compile))
-  (:import [java.net URI URL]
-           clojure.lang.ISeq java.io.File com.google.template.soy.tofu.SoyTofu)
+  (:import [clojure.lang IPersistentSet IPersistentVector ISeq]
+           [java.net URI URL]
+           java.io.File com.google.template.soy.tofu.SoyTofu)
   (:use [clojure.contrib.string :only (as-str)]
         [clojure.walk :only (postwalk)]
         closure.templates.compile))
@@ -28,15 +29,20 @@
   (render [file template data bundle]
     (render (compile file) template data bundle)))
 
+(extend-type IPersistentSet
+  Render
+  (render [set template data bundle]
+    (render (seq set) template data bundle)))
+
+(extend-type IPersistentVector
+  Render
+  (render [vector template data bundle]
+    (render (seq vector) template data bundle)))
+
 (extend-type ISeq
   Render
   (render [seq template data bundle]
     (render (compile seq) template data bundle)))
-
-(extend-type Iterable
-  Render
-  (render [iterable template data bundle]
-    (render (seq iterable) template data bundle)))
 
 (extend-type SoyTofu
   Render

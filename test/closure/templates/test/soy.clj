@@ -1,6 +1,8 @@
 (ns closure.templates.test.soy
   (:import java.io.File)
-  (:use clojure.test
+  (:refer-clojure :exclude (replace))
+  (:use [clojure.string :only (blank? replace)]
+        clojure.test
         closure.templates.soy
         closure.templates.test))
 
@@ -28,11 +30,13 @@
 (deftest test-template-name
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name nil)))
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name "")))
-  (is (= "closure.templates.test.soy.helloWorld" (template-name 'hello-world)))
+  (is (= (str *ns* ".helloWorld") (template-name 'hello-world)))
   (is (= "user.helloWorld" (template-name 'hello-world "user"))))
+
+(replace (str *ns*) "." File/separator)
 
 (deftest test-template-path
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-path nil)))
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-path "")))
-  (is (= "soy/closure/templates/test/soy.soy" (template-path "hello-world")))
+  (is (= (str "soy/" (replace (str *ns*) "." File/separator) ".soy") (template-path "hello-world")))
   (is (= "soy/user.soy" (template-path "hello-world" "user"))))
