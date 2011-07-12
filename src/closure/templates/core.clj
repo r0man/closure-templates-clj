@@ -1,25 +1,25 @@
 (ns closure.templates.core
-  (:refer-clojure :exclude (compile replace))
+  (:refer-clojure :exclude (compile))
+  (:require [closure.templates.compile :as c]
+            [closure.templates.render :as r])
   (:use closure.templates.classpath
-        closure.templates.compile
         closure.templates.fileset
-        closure.templates.render
         closure.templates.soy
         closure.templates.tofu))
 
-(defn compile-template
+(defn compile
   "Compile arg into a SoyTofu object."
-  [arg] (compile arg))
+  [arg] (c/compile arg))
 
-(defn recompile!
+(defn compile!
   "Recompile the *tofu* object with the templates in *fileset*."
-  [] (dosync (ref-set *tofu* (compile-template (seq @*fileset*)))))
+  [] (dosync (ref-set *tofu* (compile (seq @*fileset*)))))
 
-(defn render-template
+(defn render
   "Render template using the tofu, interpolate the result with data
   and the optional message bundle."
   [tofu template data & [bundle]]
-  (render tofu template data bundle))
+  (r/render tofu template data bundle))
 
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
   (let [fn-name# fn-name
@@ -27,6 +27,6 @@
         path# (template-path fn-name# (or namespace *ns*))]
     `(do
        (add-soy-file! (classpath-file ~path#))
-       (recompile!)
+       (compile!)
        (defn ~fn-name# [~@args]
-         (render-template @*tofu* ~template# (do ~body))))))
+         (render @*tofu* ~template# (do ~body))))))

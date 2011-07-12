@@ -1,7 +1,8 @@
 (ns closure.templates.test.render
+  (:refer-clojure :exclude (compile))
   (:import java.io.File java.net.URI com.google.template.soy.tofu.SoyTofu)
-  (:use clojure.test
-        closure.templates.core
+  (:use [closure.templates.compile :only (compile)]
+        clojure.test
         closure.templates.render
         closure.templates.test))
 
@@ -25,7 +26,7 @@
     (testing "with string"
       (check example-path))
     (testing "with tofu"
-      (check (compile-template example-file)))
+      (check (compile example-file)))
     (testing "with uri"
       (check example-uri))
     (testing "with url"
