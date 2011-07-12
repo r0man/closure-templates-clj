@@ -16,10 +16,10 @@
   [] (dosync (ref-set *tofu* (compile-template (seq @*fileset*)))))
 
 (defn render-template
-  "Render template using the compilation unit, interpolate the result
-  with data and the optional message bundle."
-  [compilation-unit template data & [bundle]]
-  (render compilation-unit template data bundle))
+  "Render template using the tofu, interpolate the result with data
+  and the optional message bundle."
+  [tofu template data & [bundle]]
+  (render tofu template data bundle))
 
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
   (let [fn-name# fn-name
