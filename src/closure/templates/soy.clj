@@ -29,7 +29,7 @@
 (defn soy-file-seq
   "Returns a seq of java.io.File objects which contains all Soy
   template files found in directory."
-  [directory] (map soy-file (filter soy-file? (file-seq (File. (str directory))))))
+  [directory] (filter soy-file? (file-seq (File. (str directory)))))
 
 (defn template-name
   "Returns the template name by replacing all '/' characters with a
