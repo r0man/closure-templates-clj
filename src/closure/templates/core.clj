@@ -12,7 +12,8 @@
   [arg] (c/compile arg))
 
 (defn compile!
-  "Recompile the *tofu* object with the templates in *fileset*."
+  "Compile all templates in *fileset* and set *tofu* to the returned
+  SoyTofu object."
   [] (dosync (ref-set *tofu* (compile (seq @*fileset*)))))
 
 (defn render
