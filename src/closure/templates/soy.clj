@@ -17,7 +17,7 @@
   [file] (.endsWith (str file) (str "." *extension*)))
 
 (defn soy
-  "Make a Soy file. Returns a java.io.File instance or throws an
+  "Make a Soy file. Returns a java.net.URL instance or throws an
   IllegalArgumentException if the file is not a Soy file."
   [file]
   (if (soy? file)
@@ -29,7 +29,7 @@
     (throw (IllegalArgumentException. (str "Not a Soy file: " file)))))
 
 (defn soy-seq
-  "Returns a seq of java.io.File objects which contains all Soy
+  "Returns a seq of java.net.URL objects which contains all Soy
   template files found in directory."
   [directory] (map #(.toURL %) (filter soy? (file-seq (File. (str directory))))))
 
