@@ -14,7 +14,7 @@
 (defn compile!
   "Compile all templates in *fileset* and set *tofu* to the returned
   SoyTofu object."
-  [] (dosync (ref-set *tofu* (compile (seq @*fileset*)))))
+  [] (dosync (ref-set *tofu* (compile @*fileset*))))
 
 (defn render
   "Render template using the tofu, interpolate the result with data
