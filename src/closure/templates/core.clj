@@ -23,11 +23,9 @@
   (r/render tofu template data bundle))
 
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
-  (let [fn-name# fn-name
-        template# (fn-name->js-name fn-name# (or namespace *ns*))
-        path# (fn-name->soy-path fn-name# (or namespace *ns*))]
+  (let [fn-name# fn-name]
     `(do
-       (add-soy! (classpath-url ~path#))
+       (add-soy! (classpath-url ~(fn-name->soy-path fn-name# (or namespace *ns*))))
        (compile!)
        (defn ~fn-name# [~@args]
-         (render @*tofu* ~template# (do ~body))))))
+         (render @*tofu* ~(fn-name->js-name fn-name# (or namespace *ns*)) (do ~body))))))
