@@ -24,8 +24,8 @@
 
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
   (let [fn-name# fn-name
-        template# (template-name fn-name# (or namespace *ns*))
-        path# (template-path fn-name# (or namespace *ns*))]
+        template# (soy-js fn-name# (or namespace *ns*))
+        path# (soy-path fn-name# (or namespace *ns*))]
     `(do
        (add-soy! (classpath-url ~path#))
        (compile!)

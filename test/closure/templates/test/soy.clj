@@ -28,14 +28,14 @@
     (is (= 1 (count soys)))
     (is (every? #(isa? (class %) URL) soys))))
 
-(deftest test-template-name
-  (is (thrown-with-msg? java.lang.AssertionError #"" (template-name nil)))
-  (is (thrown-with-msg? java.lang.AssertionError #"" (template-name "")))
-  (is (= (str *ns* ".helloWorld") (template-name 'hello-world)))
-  (is (= "user.helloWorld" (template-name 'hello-world "user"))))
+(deftest test-soy-js
+  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-js nil)))
+  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-js "")))
+  (is (= (str *ns* ".helloWorld") (soy-js 'hello-world)))
+  (is (= "user.helloWorld" (soy-js 'hello-world "user"))))
 
-(deftest test-template-path
-  (is (thrown-with-msg? java.lang.AssertionError #"" (template-path nil)))
-  (is (thrown-with-msg? java.lang.AssertionError #"" (template-path "")))
-  (is (= (str "soy/" (replace (str *ns*) "." File/separator) ".soy") (template-path "hello-world")))
-  (is (= "soy/user.soy" (template-path "hello-world" "user"))))
+(deftest test-soy-path
+  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-path nil)))
+  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-path "")))
+  (is (= (str "soy/" (replace (str *ns*) "." File/separator) ".soy") (soy-path "hello-world")))
+  (is (= "soy/user.soy" (soy-path "hello-world" "user"))))
