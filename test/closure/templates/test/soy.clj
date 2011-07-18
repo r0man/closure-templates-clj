@@ -7,9 +7,9 @@
         closure.templates.test))
 
 (deftest test-soy
-  (is (thrown-with-msg? IllegalArgumentException #"Not a Soy file: not-existing"
+  (is (thrown-with-msg? IllegalArgumentException #"Not a Soy: not-existing"
         (soy "not-existing")))
-  (is (thrown-with-msg? IllegalArgumentException #"Not a Soy file: resources/soy"
+  (is (thrown-with-msg? IllegalArgumentException #"Not a Soy: resources/soy"
         (soy "resources/soy")))
   (let [file (soy example-path)]
     (is (isa? (class file) URL))

@@ -11,27 +11,19 @@
 (defvar *extension* "soy"
   "The filename extension of Soy template files.")
 
+(defprotocol Soy
+  (soy [object] "Make a Soy. Returns a java.net.URL instance or throws
+  an IllegalArgumentException if the file is not a Soy file."))
+
 (defn soy?
   "Returns true if file is a regular file and the filename ends with
   '.soy', otherwise false."
   [file] (.endsWith (str file) (str "." *extension*)))
 
-(defn soy
-  "Make a Soy. Returns a java.net.URL instance or throws an
-  IllegalArgumentException if the file is not a Soy file."
-  [file]
-  (if (soy? file)
-    (cond
-     (isa? (class file) URL) file
-     (isa? (class file) URI) (.toURL file)
-     (isa? (class file) File) (.toURL file)
-     :else (.toURL (File. file)))
-    (throw (IllegalArgumentException. (str "Not a Soy file: " file)))))
-
 (defn soy-seq
   "Returns a seq of java.net.URL objects which contains all Soy
   template files found in directory."
-  [directory] (map #(.toURL %) (filter soy? (file-seq (File. (str directory))))))
+  [directory] (map soy (filter soy? (file-seq (File. (str directory))))))
 
 (defn template-name
   "Returns the template name by replacing all '/' characters with a
@@ -45,3 +37,26 @@
   (str *directory* File/separator
        (replace (underscore (str (or ns *ns*))) #"\." File/separator)
        "." *extension*))
+
+(extend-type Object
+  Soy
+  (soy [object] (throw (IllegalArgumentException. (str "Not a Soy: " object)))))
+
+(extend-type File
+  Soy
+  (soy [file]
+    (if (and (.exists file) (soy? file))
+      (.toURL file)
+      (throw (IllegalArgumentException. (str "Not a Soy: " file))))))
+
+(extend-type String
+  Soy
+  (soy [string] (soy (File. string))))
+
+(extend-type URI
+  Soy
+  (soy [uri] (.toURL uri)))
+
+(extend-type URL
+  Soy
+  (soy [url] url))
