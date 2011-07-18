@@ -27,7 +27,7 @@
         template# (template-name fn-name# (or namespace *ns*))
         path# (template-path fn-name# (or namespace *ns*))]
     `(do
-       (add-soy-file! (classpath-url ~path#))
+       (add-soy! (classpath-url ~path#))
        (compile!)
        (defn ~fn-name# [~@args]
          (render @*tofu* ~template# (do ~body))))))

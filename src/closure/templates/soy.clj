@@ -11,16 +11,16 @@
 (defvar *extension* "soy"
   "The filename extension of Soy template files.")
 
-(defn soy-file?
+(defn soy?
   "Returns true if file is a regular file and the filename ends with
   '.soy', otherwise false."
   [file] (.endsWith (str file) (str "." *extension*)))
 
-(defn soy-file
+(defn soy
   "Make a Soy file. Returns a java.io.File instance or throws an
   IllegalArgumentException if the file is not a Soy file."
   [file]
-  (if (soy-file? file)
+  (if (soy? file)
     (cond
      (isa? (class file) URL) file
      (isa? (class file) URI) (.toURL file)
@@ -28,10 +28,10 @@
      :else (.toURL (File. file)))
     (throw (IllegalArgumentException. (str "Not a Soy file: " file)))))
 
-(defn soy-file-seq
+(defn soy-seq
   "Returns a seq of java.io.File objects which contains all Soy
   template files found in directory."
-  [directory] (map #(.toURL %) (filter soy-file? (file-seq (File. (str directory))))))
+  [directory] (map #(.toURL %) (filter soy? (file-seq (File. (str directory))))))
 
 (defn template-name
   "Returns the template name by replacing all '/' characters with a

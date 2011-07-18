@@ -34,7 +34,7 @@
 (extend-type ISeq
   Compile
   (compile [seq]
-    (compile-fileset (set (map soy-file seq)))))
+    (compile-fileset (set (map soy seq)))))
 
 (extend-type SoyTofu
   Compile

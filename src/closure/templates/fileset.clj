@@ -5,7 +5,7 @@
 (defvar *fileset* (ref #{})
   "A reference to the compiled Soy files.")
 
-(defn add-soy-file!
+(defn add-soy!
   "Add the Soy file to *fileset*."
   [file]
   (dosync (alter *fileset* conj file)))

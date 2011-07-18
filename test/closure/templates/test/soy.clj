@@ -6,24 +6,24 @@
         closure.templates.soy
         closure.templates.test))
 
-(deftest test-soy-file
+(deftest test-soy
   (is (thrown-with-msg? IllegalArgumentException #"Not a Soy file: not-existing"
-        (soy-file "not-existing")))
+        (soy "not-existing")))
   (is (thrown-with-msg? IllegalArgumentException #"Not a Soy file: resources/soy"
-        (soy-file "resources/soy")))
-  (let [file (soy-file example-path)]
+        (soy "resources/soy")))
+  (let [file (soy example-path)]
     (is (isa? (class file) URL))
     (is (= (.getAbsolutePath (File. example-path)) (.getPath file)))
-    (is (= file (soy-file file)))))
+    (is (= file (soy file)))))
 
-(deftest test-soy-file?
-  (is (not (soy-file? "not-existing")))
-  (is (soy-file? example-path))
-  (is (soy-file? (File. example-path))))
+(deftest test-soy?
+  (is (not (soy? "not-existing")))
+  (is (soy? example-path))
+  (is (soy? (File. example-path))))
 
-(deftest test-soy-file-seq
-  (is (empty? (soy-file-seq "not-existing")))
-  (let [soys (soy-file-seq "resources/soy")]
+(deftest test-soy-seq
+  (is (empty? (soy-seq "not-existing")))
+  (let [soys (soy-seq "resources/soy")]
     (is (seq? soys))
     (is (= 1 (count soys)))
     (is (every? #(isa? (class %) URL) soys))))
