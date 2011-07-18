@@ -28,14 +28,14 @@
     (is (= 1 (count soys)))
     (is (every? #(isa? (class %) URL) soys))))
 
-(deftest test-soy-js
-  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-js nil)))
-  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-js "")))
-  (is (= (str *ns* ".helloWorld") (soy-js 'hello-world)))
-  (is (= "user.helloWorld" (soy-js 'hello-world "user"))))
+(deftest test-fn-name->js-name
+  (is (thrown-with-msg? java.lang.AssertionError #"" (fn-name->js-name nil)))
+  (is (thrown-with-msg? java.lang.AssertionError #"" (fn-name->js-name "")))
+  (is (= (str *ns* ".helloWorld") (fn-name->js-name 'hello-world)))
+  (is (= "user.helloWorld" (fn-name->js-name 'hello-world "user"))))
 
-(deftest test-soy-path
-  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-path nil)))
-  (is (thrown-with-msg? java.lang.AssertionError #"" (soy-path "")))
-  (is (= (str "soy/" (replace (str *ns*) "." File/separator) ".soy") (soy-path "hello-world")))
-  (is (= "soy/user.soy" (soy-path "hello-world" "user"))))
+(deftest test-fn-name->soy-path
+  (is (thrown-with-msg? java.lang.AssertionError #"" (fn-name->soy-path nil)))
+  (is (thrown-with-msg? java.lang.AssertionError #"" (fn-name->soy-path "")))
+  (is (= (str "soy/" (replace (str *ns*) "." File/separator) ".soy") (fn-name->soy-path "hello-world")))
+  (is (= "soy/user.soy" (fn-name->soy-path "hello-world" "user"))))
