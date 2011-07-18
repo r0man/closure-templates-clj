@@ -1,5 +1,5 @@
 (ns closure.templates.test.soy
-  (:import java.io.File)
+  (:import java.io.File java.net.URL)
   (:refer-clojure :exclude (replace))
   (:use [clojure.string :only (blank? replace)]
         clojure.test
@@ -12,8 +12,9 @@
   (is (thrown-with-msg? IllegalArgumentException #"Not a Soy file: resources/soy"
         (soy-file "resources/soy")))
   (let [file (soy-file example-path)]
-    (is (isa? (class file) File))
-    (is (= example-path (.getPath file)))))
+    (is (isa? (class file) URL))
+    (is (= (.getAbsolutePath (File. example-path)) (.getPath file)))
+    (is (= file (soy-file file)))))
 
 (deftest test-soy-file?
   (is (not (soy-file? "not-existing")))
@@ -25,15 +26,13 @@
   (let [soys (soy-file-seq "resources/soy")]
     (is (seq? soys))
     (is (= 1 (count soys)))
-    (is (every? #(isa? (class %) File) soys))))
+    (is (every? #(isa? (class %) URL) soys))))
 
 (deftest test-template-name
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name nil)))
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-name "")))
   (is (= (str *ns* ".helloWorld") (template-name 'hello-world)))
   (is (= "user.helloWorld" (template-name 'hello-world "user"))))
-
-(replace (str *ns*) "." File/separator)
 
 (deftest test-template-path
   (is (thrown-with-msg? java.lang.AssertionError #"" (template-path nil)))

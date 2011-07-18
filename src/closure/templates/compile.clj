@@ -19,7 +19,7 @@
 (extend-type File
   Compile
   (compile [file]
-    (compile-fileset [(soy-file file)])))
+    (compile-fileset [file])))
 
 (extend-type IPersistentSet
   Compile
@@ -44,14 +44,14 @@
 (extend-type String
   Compile
   (compile [path]
-    (compile (File. path))))
+    (compile (.toURL (File. path)))))
 
 (extend-type URI
   Compile
   (compile [uri]
-    (compile (File. uri))))
+    (compile-fileset [(.toURL uri)])))
 
 (extend-type URL
   Compile
   (compile [url]
-    (compile (.toURI url))))
+    (compile-fileset [url])))
