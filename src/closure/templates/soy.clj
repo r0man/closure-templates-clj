@@ -17,7 +17,7 @@
   [file] (.endsWith (str file) (str "." *extension*)))
 
 (defn soy
-  "Make a Soy file. Returns a java.net.URL instance or throws an
+  "Make a Soy. Returns a java.net.URL instance or throws an
   IllegalArgumentException if the file is not a Soy file."
   [file]
   (if (soy? file)
