@@ -25,7 +25,7 @@
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
   (let [fn-name# fn-name namespace# (or namespace *ns*)]
     `(do
-       (add-soy! (classpath-url ~(fn-name->soy-path fn-name# namespace#)))
+       (add-soy! (classpath-url ~(fn-path fn-name# namespace#)))
        (compile!)
        (defn ~fn-name# [~@args]
-         (render @*tofu* ~(fn-name->js-name fn-name# namespace#) (do ~body))))))
+         (render @*tofu* ~(fn-js fn-name# namespace#) (do ~body))))))

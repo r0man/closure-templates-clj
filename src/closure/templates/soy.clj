@@ -25,13 +25,13 @@
   template files found in directory."
   [directory] (map soy (filter soy? (file-seq (File. (str directory))))))
 
-(defn fn-name->js-name
+(defn fn-js
   "Returns the template name by replacing all '/' characters with a
   '.' and camelizing the names between dots."
   [name & [ns]] {:pre [(not (blank? (str name)))]}
   (camelize (replace (str (or ns *ns*) "/" name) "/" ".") :lower))
 
-(defn fn-name->soy-path
+(defn fn-path
   "Returns the filename of the template relative to the classpath."
   [name & [ns]] {:pre [(not (blank? (str name)))]}
   (str *directory* File/separator
