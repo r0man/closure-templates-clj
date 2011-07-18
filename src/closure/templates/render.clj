@@ -4,20 +4,13 @@
            [java.net URI URL]
            java.io.File com.google.template.soy.tofu.SoyTofu)
   (:use [clojure.contrib.string :only (as-str)]
-        [clojure.walk :only (postwalk)]
+        [clojure.walk :only (stringify-keys)]
+        [inflections.core :only (underscore-keys)]
         closure.templates.compile))
 
 (defprotocol Render
   (render [object template data bundle]
     "Render the Soy template."))
-
-(defn underscore-keys
-  "Recursively transforms all map keys to strings and replaces all
-  dashes in the map keys with underscores."
-  [m] (let [f (fn [[k v]]
-                [(.replace (as-str k) "-" "_")
-                 (if (map? v) (underscore-keys v) v)])]
-        (postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
 
 (extend-type nil
   Render
@@ -47,7 +40,7 @@
 (extend-type SoyTofu
   Render
   (render [tofu template data bundle]
-    (.render tofu template (underscore-keys data) bundle)))
+    (.render tofu template (underscore-keys (stringify-keys data)) bundle)))
 
 (extend-type String
   Render
