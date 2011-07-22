@@ -20,11 +20,29 @@
   (render tofu template data bundle))
 
 (defmacro deftemplate
-  "Define a Soy template."
-  [fn-name args body & {:keys [filename namespace]}]
-  (let [fn-name# fn-name namespace# (or namespace *ns*)]
+  "Define a render fn for a Soy template. The macro expects that the
+  Soy templates are defined in files matching the hierarchy of the
+  Clojure namespace in the Soy *directory* on the classpath.
+
+  The render fn \"hello-name\" defined in the namespace
+  \"closure.templates.test.core\" expects a Soy template named
+  \".helloName\" in the \"soy/closure/templates/test/core.soy\" file
+  on the classpath.
+
+Example:
+
+  (ns closure.templates.test.core)
+
+  (deftemplate hello-name [name]
+    {:name name})
+
+  (hello-name \"Closure\")
+  ;=> \"Hello Closure\"
+"
+  [name args body & {:keys [filename namespace]}]
+  (let [name# name namespace# (or namespace *ns*)]
     `(do
-       (add-soy! (resource ~(fn-path fn-name# namespace#)))
+       (add-soy! (resource ~(fn-path name# namespace#)))
        (compile!)
-       (defn ~fn-name# [~@args]
-         (render-template @*tofu* ~(fn-js fn-name# namespace#) (do ~body))))))
+       (defn ~name# [~@args]
+         (render-template @*tofu* ~(fn-js name# namespace#) (do ~body))))))
