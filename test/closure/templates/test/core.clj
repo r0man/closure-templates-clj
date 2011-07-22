@@ -10,14 +10,11 @@
 (deftemplate hello-name [name]
   {:name name})
 
-(deftest test-compile
-  (is-compiling compile))
+(deftest test-compile-template
+  (is-compiling compile-template))
 
-(deftest test-compile!
-  (is (tofu? (compile!))))
-
-(deftest test-render
-  (is-rendering render))
+(deftest test-render-template
+  (is-rendering render-template))
 
 (deftest test-hello-name
   (is (= "Hello Closure!" (hello-name "Closure"))))
