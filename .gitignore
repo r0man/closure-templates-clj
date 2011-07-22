@@ -5,3 +5,5 @@ pom.xml
 /classes/
 .lein-deps-sum
 /log/debug.log
+/.lein-failures
+/autodoc/
