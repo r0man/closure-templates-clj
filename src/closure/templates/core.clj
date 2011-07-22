@@ -21,17 +21,18 @@
 
 (defmacro deftemplate
   "Define a render fn for a Soy template. The macro expects that the
-  Soy templates are defined in files matching the hierarchy of the
-  Clojure namespace in the Soy *directory* on the classpath.
+Soy templates are defined in files matching the hierarchy of the
+Clojure namespace in the Soy *directory* on the classpath.
 
-  The render fn \"hello-name\" defined in the namespace
-  \"closure.templates.test.core\" expects a Soy template named
-  \".helloName\" in the \"soy/closure/templates/test/core.soy\" file
-  on the classpath.
+The render fn \"hello-name\" defined in the namespace
+\"closure.templates.test.core\" expects a Soy template with the name
+\".helloName\" in the \"soy/closure/templates/test/core.soy\" file on
+the classpath.
 
 Example:
 
-  (ns closure.templates.test.core)
+  (ns closure.templates.test.core
+    (:use closure.templates.core))
 
   (deftemplate hello-name [name]
     {:name name})
