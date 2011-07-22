@@ -3,13 +3,25 @@
 
 Clojure library for Google's Closure Templates.
 
-### Installation
+## Installation
 
 Via [Clojars](http://clojars.org/closure-templates-clj).
 
-### Documentation
+## Documentation
 
 The API documentation is available [here](http://r0man.github.com/closure-templates-clj).
+
+## Examples
+<pre> <code>
+(ns closure.templates.test.core
+  (:use closure.templates.core))
+
+(deftemplate hello-name [name]
+  {:name name})
+
+(hello-name \"Closure\")
+;=> \"Hello Closure\"
+</pre> </code>
 
 ## License
 
