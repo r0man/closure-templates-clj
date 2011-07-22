@@ -22,10 +22,12 @@ The API documentation is available at http://r0man.github.com/closure-templates-
 (hello-name \"Closure\")
 ;=> \"Hello Closure\"
 
-Note: This example expects a Soy template named "helloName" in the
-file "soy/closure/templates/test/core.soy" on te classpath. The render
-fn must match the template name, and the filename the Clojure
-namespace.
+## Notes
+
+This example expects a Soy template named "helloName" in the file
+"soy/closure/templates/test/core.soy" on the classpath. The render fn
+must match with the template name, and the Clojure namespace with the
+Soy filename.
 
 ## License
 
