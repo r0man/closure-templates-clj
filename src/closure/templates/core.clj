@@ -4,7 +4,7 @@
   (:refer-clojure :exclude (compile))
   (:require [closure.templates.compile :as c]
             [closure.templates.render :as r])
-  (:use closure.templates.classpath
+  (:use [clojure.java.io :only (resource)]
         closure.templates.fileset
         closure.templates.soy
         closure.templates.tofu))
@@ -27,7 +27,7 @@
 (defmacro deftemplate [fn-name args body & {:keys [filename namespace]}]
   (let [fn-name# fn-name namespace# (or namespace *ns*)]
     `(do
-       (add-soy! (classpath-url ~(fn-path fn-name# namespace#)))
+       (add-soy! (resource ~(fn-path fn-name# namespace#)))
        (compile!)
        (defn ~fn-name# [~@args]
          (render @*tofu* ~(fn-js fn-name# namespace#) (do ~body))))))

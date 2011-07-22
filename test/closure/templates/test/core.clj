@@ -4,7 +4,6 @@
   (:use [closure.templates.test.compile :only (is-compiling)]
         [closure.templates.test.render :only (is-rendering)]
         clojure.test
-        closure.templates.classpath
         closure.templates.core
         closure.templates.tofu))
 
