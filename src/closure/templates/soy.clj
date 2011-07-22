@@ -46,9 +46,9 @@
 (extend-type File
   Soy
   (soy [file]
-    (if (and (.exists file) (soy? file))
-      (.toURL file)
-      (throw (IllegalArgumentException. (str "Not a Soy: " file))))))
+    (if (.exists file)
+      (soy (.toURL file))
+      (throw (IllegalArgumentException. (str "Soy doesn't exist: " file))))))
 
 (extend-type String
   Soy
@@ -60,4 +60,6 @@
 
 (extend-type URL
   Soy
-  (soy [url] url))
+  (soy [url]
+    (if (soy? url)
+      url (throw (IllegalArgumentException. (str "Not a Soy: " url))))))
