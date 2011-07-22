@@ -7,22 +7,22 @@
         [inflections.core :only (camelize underscore)]))
 
 (defvar *directory* "soy"
-  "The directory on the classpath containing the Soy template files.")
+  "The directory on the classpath where the Soy template files are
+  stored.")
 
 (defvar *extension* "soy"
-  "The filename extension of Soy template files.")
+  "The filename extension of a Soy template file.")
 
 (defprotocol Soy
   (soy [object] "Make a Soy. Returns a java.net.URL instance or throws
-  an IllegalArgumentException if the file is not a Soy file."))
+  an IllegalArgumentException if object is not a Soy."))
 
 (defn soy?
-  "Returns true if file is a regular file and the filename ends with
-  '.soy', otherwise false."
-  [file] (.endsWith (str file) (str "." *extension*)))
+  "Returns true if the resource ends with '.soy', otherwise false."
+  [resource] (.endsWith (str resource) (str "." *extension*)))
 
 (defn soy-seq
-  "Returns a seq of java.net.URL objects which contains all Soy
+  "Returns a seq of java.net.URL objects that contains all Soy
   template files found in directory."
   [directory] (map soy (filter soy? (file-seq (File. (str directory))))))
 
@@ -41,7 +41,8 @@
 
 (extend-type Object
   Soy
-  (soy [object] (throw (IllegalArgumentException. (str "Not a Soy: " object)))))
+  (soy [object]
+    (throw (IllegalArgumentException. (str "Not a Soy: " object)))))
 
 (extend-type File
   Soy
