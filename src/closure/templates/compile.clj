@@ -20,22 +20,22 @@
 (extend-type File
   Compile
   (compile [file]
-    (compile-fileset [file])))
+    (compile (.toURL file))))
 
 (extend-type IPersistentSet
   Compile
   (compile [set]
-    (compile (seq set))))
+    (compile-fileset (map soy set))))
 
 (extend-type IPersistentVector
   Compile
   (compile [vector]
-    (compile (seq vector))))
+    (compile (set vector))))
 
 (extend-type ISeq
   Compile
   (compile [seq]
-    (compile-fileset (set (map soy seq)))))
+    (compile (set (map soy seq)))))
 
 (extend-type SoyTofu
   Compile
@@ -45,12 +45,12 @@
 (extend-type String
   Compile
   (compile [path]
-    (compile (.toURL (File. path)))))
+    (compile (File. path))))
 
 (extend-type URI
   Compile
   (compile [uri]
-    (compile-fileset [(.toURL uri)])))
+    (compile (.toURL uri))))
 
 (extend-type URL
   Compile
