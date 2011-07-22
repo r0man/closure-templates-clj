@@ -1,0 +1,34 @@
+
+# CLOSURE-TEMPLATES-CLJ
+
+Clojure library for Google's Closure Templates.
+
+## Installation
+
+Via Clojars: http://clojars.org/closure-templates-clj.
+
+## Documentation
+
+The API documentation is available at http://r0man.github.com/closure-templates-clj.
+
+## Examples
+
+(ns closure.templates.test.core
+  (:use closure.templates.core))
+
+(deftemplate hello-name [name]
+  {:name name})
+
+(hello-name \"Closure\")
+;=> \"Hello Closure\"
+
+Note: This example expects a Soy template named "helloName" in the
+file "soy/closure/templates/test/core.soy" on te classpath. The render
+fn must match the template name, and the filename the Clojure
+namespace.
+
+## License
+
+Copyright (C) 2011 Roman Scherer
+
+Distributed under the Eclipse Public License, the same as Clojure.
