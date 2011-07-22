@@ -1,4 +1,5 @@
-(ns closure.templates.soy
+(ns #^{:doc "Soy helpers." :author "Roman Scherer"}
+  closure.templates.soy
   (:refer-clojure :exclude (replace))
   (:import java.io.File java.net.URL java.net.URI)
   (:use [clojure.contrib.def :only (defvar)]

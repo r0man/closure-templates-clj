@@ -1,4 +1,5 @@
-(ns closure.templates.classpath
+(ns #^{:doc "Classpath helpers." :author "Roman Scherer"}
+  closure.templates.classpath
   (:import [java.net URI URL]
            [java.io File FileNotFoundException]))
 

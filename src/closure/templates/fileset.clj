@@ -1,4 +1,5 @@
-(ns closure.templates.fileset
+(ns #^{:doc "Fileset helpers." :author "Roman Scherer"}
+  closure.templates.fileset
   (:import [com.google.template.soy SoyFileSet$Builder])
   (:use [clojure.contrib.def :only (defvar)]))
 

@@ -1,4 +1,5 @@
-(ns closure.templates.compile
+(ns #^{:doc "Compilation of Soy templates." :author "Roman Scherer"}
+  closure.templates.compile
   (:refer-clojure :exclude (compile))
   (:import [clojure.lang IPersistentSet IPersistentVector ISeq]
            [java.net URI URL]

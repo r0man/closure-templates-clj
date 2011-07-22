@@ -1,4 +1,5 @@
-(ns closure.templates.render
+(ns #^{:doc "Rendering of Soy templates." :author "Roman Scherer"}
+  closure.templates.render
   (:refer-clojure :exclude (compile))
   (:import java.io.File com.google.template.soy.tofu.SoyTofu)
   (:use [clojure.walk :only (stringify-keys)]

@@ -1,4 +1,5 @@
-(ns closure.templates.tofu
+(ns #^{:doc "Tofu helpers." :author "Roman Scherer"}
+  closure.templates.tofu
   (:import com.google.template.soy.tofu.SoyTofu)
   (:use [clojure.contrib.def :only (defvar)]))
 

@@ -1,4 +1,6 @@
-(ns closure.templates.core
+(ns #^{:doc "Clojure library for Google's Closure Templates."
+       :author "Roman Scherer"}
+  closure.templates.core
   (:refer-clojure :exclude (compile))
   (:require [closure.templates.compile :as c]
             [closure.templates.render :as r])
