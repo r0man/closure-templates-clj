@@ -1,4 +1,4 @@
-(defproject closure-templates-clj "0.1.0"
+(defproject closure-templates-clj "0.1.1-SNAPSHOT"
   :author "Roman Scherer"
   :autodoc {:copyright "Copyright (c) 2011 Roman Scherer"
             :name "Clojure Library for Google's Closure Templates"
