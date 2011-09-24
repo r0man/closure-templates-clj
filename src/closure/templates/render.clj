@@ -2,9 +2,14 @@
   closure.templates.render
   (:refer-clojure :exclude (compile))
   (:import java.io.File com.google.template.soy.tofu.SoyTofu)
-  (:use [clojure.walk :only (stringify-keys)]
-        [inflections.core :only (underscore-keys)]
+  (:use [inflections.core :only (underscore-keys stringify-keys transform-values)]
         closure.templates.compile))
+
+(defn transform-data [data]
+  (-> data
+      (transform-values #(if (isa? (class %) Long) (Integer. %) %))
+      (stringify-keys)
+      (underscore-keys)))
 
 (defprotocol Render
   (render [object template data bundle]
@@ -23,4 +28,4 @@
 (extend-type SoyTofu
   Render
   (render [tofu template data bundle]
-    (.render tofu template (underscore-keys (stringify-keys data)) bundle)))
+    (.render tofu template (transform-data data) bundle)))

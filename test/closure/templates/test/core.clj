@@ -17,4 +17,5 @@
   (is-rendering render-template))
 
 (deftest test-hello-name
-  (is (= "Hello Closure!" (hello-name "Closure"))))
+  (is (= "Hello Closure!" (hello-name "Closure")))
+  (is (= "Hello 1!" (hello-name 1))))
