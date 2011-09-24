@@ -2,16 +2,11 @@
   closure.templates.soy
   (:refer-clojure :exclude (replace))
   (:import java.io.File java.net.URL java.net.URI)
-  (:use [clojure.contrib.def :only (defvar)]
-        [clojure.string :only (blank? replace)]
+  (:use [clojure.string :only (blank? replace)]
         [inflections.core :only (camelize underscore)]))
 
-(defvar *directory* "soy"
-  "The directory on the classpath where the Soy template files are
-  stored.")
-
-(defvar *extension* "soy"
-  "The filename extension of a Soy template file.")
+(def ^:dynamic *directory* "soy")
+(def ^:dynamic *extension* "soy")
 
 (defprotocol Soy
   (soy [object] "Make a Soy. Returns a java.net.URL instance or throws

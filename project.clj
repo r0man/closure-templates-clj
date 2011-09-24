@@ -1,4 +1,4 @@
-(defproject closure-templates-clj "0.0.2-SNAPSHOT"
+(defproject closure-templates-clj "0.0.3-SNAPSHOT"
   :author "Roman Scherer"
   :autodoc {:copyright "Copyright (c) 2011 Roman Scherer"
             :name "Clojure Library for Google's Closure Templates"
@@ -7,7 +7,5 @@
   :description "Clojure Library for Google's Closure Templates."
   :url "https://github.com/r0man/closure-templates-clj"
   :dependencies [[clj-soy/google-closure-templates "20100708"]
-                 [inflections "0.4.4"]
-                 [org.clojure/clojure "1.2.1"]
-                 [org.clojure/clojure-contrib "1.2.0"]]
-  :dev-dependencies [[org.clojars.rayne/autodoc "0.8.0-SNAPSHOT"]])
+                 [inflections "0.6.0"]
+                 [org.clojure/clojure "1.3.0"]])

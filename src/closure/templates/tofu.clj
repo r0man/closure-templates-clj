@@ -2,13 +2,10 @@
   closure.templates.tofu
   (:refer-clojure :exclude (compile))
   (:import com.google.template.soy.tofu.SoyTofu)
-  (:use [clojure.contrib.def :only (defvar)]
-        closure.templates.compile
+  (:use closure.templates.compile
         closure.templates.fileset))
 
-(defvar *tofu* (ref nil)
-  "The global Tofu object that contains all compiled Soy template
-  files that were define via deftemplate.")
+(def ^:dynamic *tofu* (ref nil))
 
 (defn compile!
   "Compile all templates in *fileset* and set *tofu* to the returned

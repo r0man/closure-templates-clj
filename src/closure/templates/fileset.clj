@@ -1,10 +1,8 @@
 (ns #^{:doc "Fileset helpers." :author "Roman Scherer"}
   closure.templates.fileset
-  (:import [com.google.template.soy SoyFileSet$Builder])
-  (:use [clojure.contrib.def :only (defvar)]))
+  (:import [com.google.template.soy SoyFileSet$Builder]))
 
-(defvar *fileset* (ref #{})
-  "A reference to the compiled Soy files.")
+(def ^:dynamic *fileset* (ref #{}))
 
 (defn add-soy!
   "Add the Soy file to *fileset*."
