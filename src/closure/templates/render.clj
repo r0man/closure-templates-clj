@@ -2,7 +2,8 @@
   closure.templates.render
   (:refer-clojure :exclude (compile))
   (:import java.io.File com.google.template.soy.tofu.SoyTofu)
-  (:use [inflections.core :only (underscore-keys stringify-keys transform-values)]
+  (:use [inflections.core :only (underscore-keys stringify-keys)]
+        [inflections.transform :only (transform-values)]
         closure.templates.compile))
 
 (defn transform-data [data]
