@@ -6,11 +6,13 @@
         [inflections.transform :only (transform-values)]
         closure.templates.compile))
 
+(def ^{:dynamic true} *key-transform* underscore-keys)
+
 (defn transform-data [data]
   (-> data
       (transform-values #(if (isa? (class %) Long) (Integer. %) %))
       (stringify-keys)
-      (underscore-keys)))
+      (*key-transform*)))
 
 (defprotocol Render
   (render [object template data bundle]
