@@ -7,5 +7,5 @@
   :description "Clojure Library for Google's Closure Templates."
   :url "https://github.com/r0man/closure-templates-clj"
   :dependencies [[clj-soy/google-closure-templates "20100708"]
-                 [inflections "0.6.3"]
+                 [inflections "0.6.5-SNAPSHOT"]
                  [org.clojure/clojure "1.3.0"]])
